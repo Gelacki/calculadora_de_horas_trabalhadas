@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calculadora de Horas Trabalhadas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="pagina">
+    <header class="cabecalho">
+      <h1>Calculadora de horas trabalhadas</h1>
+      <p>Informe sua jornada, o salário e os horários de cada dia. O valor é atualizado enquanto você digita.</p>
+    </header>
+
+    <div class="topo">
+      <section class="painel" aria-labelledby="titulo-dados">
+        <h2 id="titulo-dados">Seus dados</h2>
+        <div class="campos">
+          <label class="campo">
+            <span>Jornada do dia</span>
+            <input id="jornada" type="time" value="08:45" required>
+            <small>Acima disso conta como hora extra.</small>
+          </label>
+          <label class="campo">
+            <span>Salário bruto (R$)</span>
+            <input id="salario" type="text" inputmode="decimal" autocomplete="off" placeholder="0,00">
+            <small>Valor mensal.</small>
+          </label>
+          <label class="campo">
+            <span>Divisor de horas</span>
+            <input id="divisor" type="text" inputmode="decimal" autocomplete="off" value="220">
+            <small>220 para 44 horas semanais.</small>
+          </label>
+        </div>
+      </section>
+
+      <section class="painel resumo" aria-labelledby="titulo-resumo">
+        <h2 id="titulo-resumo">Total dos dias lançados</h2>
+        <output id="total" class="total">—</output>
+        <dl class="linhas">
+          <div><dt>Horas trabalhadas</dt><dd id="res-horas">00:00</dd></div>
+          <div><dt>Valor da hora</dt><dd id="res-hora">—</dd></div>
+          <div><dt>Horas normais</dt><dd id="res-normal">—</dd></div>
+          <div><dt>Extras a 50%</dt><dd id="res-e50">—</dd></div>
+          <div><dt>Extras a 60%</dt><dd id="res-e60">—</dd></div>
+          <div><dt>Extras a 100% <small>sábados, domingos e feriados</small></dt><dd id="res-dobro">—</dd></div>
+          <div class="destaque">
+            <dt>Salário + extras <small>mês completo, sem faltas</small></dt>
+            <dd id="res-mes">—</dd>
+          </div>
+        </dl>
+      </section>
+    </div>
+
+    <section class="painel" aria-labelledby="titulo-dias">
+      <div class="titulo-acoes">
+        <h2 id="titulo-dias">Dias trabalhados</h2>
+        <button id="limpar" type="button" class="botao secundario">Limpar tudo</button>
+      </div>
+
+      <table class="dias">
+        <thead>
+          <tr>
+            <th scope="col">Data</th>
+            <th scope="col">Entrada</th>
+            <th scope="col">Saída almoço</th>
+            <th scope="col">Volta almoço</th>
+            <th scope="col">Saída</th>
+            <th scope="col">Sáb./dom./feriado</th>
+            <th scope="col" class="num">Trabalhado</th>
+            <th scope="col" class="num">Extra 50%</th>
+            <th scope="col" class="num">Extra 60%</th>
+            <th scope="col" class="num">Extra 100%</th>
+            <th scope="col" class="num">Valor do dia</th>
+            <th scope="col"><span class="oculto">Remover</span></th>
+          </tr>
+        </thead>
+        <tbody id="corpo"></tbody>
+      </table>
+
+      <button id="adicionar" type="button" class="botao">+ Adicionar dia</button>
+    </section>
+
+    <footer class="rodape">
+      <p>
+        Regras da <a href="https://www.stigpr.com.br/images/pdf/CCT2026.pdf" target="_blank" rel="noopener">CCT 2026/2026 dos gráficos do Paraná</a>:
+        50% nas duas primeiras horas extras do dia e 60% nas seguintes (Cláusula 9ª); domingos e feriados em dobro (Cláusula 10ª).
+        Sábados em dobro é um ajuste desta calculadora, não previsto na CCT.
+      </p>
+      <p>Valores brutos, sem descontos. Não inclui adicional noturno nem o reflexo das horas extras no descanso semanal.</p>
+    </footer>
+  </main>
+
+  <template id="modelo-linha">
+    <tr>
+      <td data-rotulo="Data"><input data-campo="data" type="date" aria-label="Data"></td>
+      <td data-rotulo="Entrada"><input data-campo="entrada" type="time" aria-label="Entrada"></td>
+      <td data-rotulo="Saída almoço"><input data-campo="saidaAlmoco" type="time" aria-label="Saída para o almoço"></td>
+      <td data-rotulo="Volta almoço"><input data-campo="voltaAlmoco" type="time" aria-label="Volta do almoço"></td>
+      <td data-rotulo="Saída"><input data-campo="saida" type="time" aria-label="Saída"></td>
+      <td data-rotulo="Sáb./dom./feriado" class="marcar"><input data-campo="especial" type="checkbox" aria-label="Sábado, domingo ou feriado"></td>
+      <td data-rotulo="Trabalhado" class="num" data-res="trabalhado">—</td>
+      <td data-rotulo="Extra 50%" class="num" data-res="e50">—</td>
+      <td data-rotulo="Extra 60%" class="num" data-res="e60">—</td>
+      <td data-rotulo="Extra 100%" class="num" data-res="e100">—</td>
+      <td data-rotulo="Valor do dia" class="num valor" data-res="valor">—</td>
+      <td class="acao"><button type="button" class="remover" aria-label="Remover este dia" title="Remover este dia">×</button></td>
+    </tr>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
